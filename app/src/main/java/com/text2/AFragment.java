@@ -46,4 +46,8 @@ public class AFragment extends Fragment {
     public void setUpdater(Updater updater) {
         this.updater = updater;
     }
+
+    public void removeUpdater() {
+        this.updater = null;
+    }
 }

@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity implements Updater {
     @Inject RepositoryRestImpl repositoryRest;
 
     private EventManager eventManager;
+    private AFragment aFragment;
+    private BFragment bFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +37,11 @@ public class MainActivity extends AppCompatActivity implements Updater {
         eventManager = new EventManager();
 
         //1
-        AFragment aFragment = AFragment.newInstance(this);
+        aFragment = AFragment.newInstance(this);
         //2
         aFragment.setUpdater(this);
 
-        BFragment bFragment = new BFragment();
+        bFragment = new BFragment();
 
         eventManager.subscribe(bFragment);
 
@@ -64,6 +66,8 @@ public class MainActivity extends AppCompatActivity implements Updater {
     @Override
     protected void onStart() {
         super.onStart();
+        eventManager.subscribe(bFragment);
+        aFragment.setUpdater(this);
         Log.d(TAG, "onStart");
     }
 
@@ -88,6 +92,8 @@ public class MainActivity extends AppCompatActivity implements Updater {
     @Override
     protected void onStop() {
         super.onStop();
+        eventManager.unsubscribe(bFragment);
+        aFragment.removeUpdater();
         Log.d(TAG, "onStop");
     }
 
