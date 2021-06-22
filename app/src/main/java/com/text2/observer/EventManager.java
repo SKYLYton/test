@@ -1,20 +1,20 @@
 package com.text2.observer;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class EventManager {
-    private List<EventListener> listenerList = new ArrayList<>();
+    private final Set<EventListener> listenerList = new HashSet<>();
 
-    public void subscribe(EventListener eventListener){
+    public void subscribe(EventListener eventListener) {
         listenerList.add(eventListener);
     }
 
-    public void unsubscribe(EventListener eventListener){
+    public void unsubscribe(EventListener eventListener) {
         listenerList.remove(eventListener);
     }
 
-    public void update(String text){
+    public void notify(String text) {
         for (EventListener eventListener : listenerList) {
             eventListener.update(text);
         }
